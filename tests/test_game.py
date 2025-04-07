@@ -30,3 +30,9 @@ class TestGame:
         game.grid = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
         valid = game.is_valid("xyz")
         assert valid == False
+
+    def test_unknown_word_is_invalid(self):
+        """A word that is not in the English dictionary should not be valid"""
+        game = self.game
+        game.grid = list('KWIENFUQW') # Force the grid to a test case:
+        assert game.is_valid('KWIE') is False

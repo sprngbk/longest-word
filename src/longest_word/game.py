@@ -5,6 +5,7 @@
 from collections import Counter
 import random
 import string
+import requests
 
 class Game:
     """Represents a word game with a 9-letter random grid."""
@@ -16,6 +17,13 @@ class Game:
     def is_valid(self, word: str) -> bool:
         """Check if the word can be formed using letters from the grid."""
         if not word:
+            return False
+
+        valid_word_response = requests.get(f"https://dictionary.lewagon.com/{word}")
+        json = valid_word_response.json()
+        is_eng_word = json['found']
+
+        if not is_eng_word:
             return False
 
         word_counter = Counter(word.upper())
